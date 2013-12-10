@@ -10,7 +10,7 @@ func NewIndividual(minEnergy int, maxEnergy int) Individual {
     return individual
 }
 
-func ExertEnergy(individual *Individual, randomNum float32) int {
+func (individual *Individual) ExertEnergy(randomNum float32) int {
     upperBound := individual.MaxEnergy - individual.MinEnergy + 1
     return int((randomNum * float32(upperBound)) + float32(individual.MinEnergy))
 }
