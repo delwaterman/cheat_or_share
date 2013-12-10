@@ -1,21 +1,16 @@
 package sims
 
-import "math/rand"
-
 type Individual struct {
     MinEnergy int
     MaxEnergy int
-    RandSeed int64
 }
 
-func NewIndividual(minEnergy int, maxEnergy int, randSeed int64) Individual {
-    individual := Individual{minEnergy, maxEnergy, randSeed}
-
+func NewIndividual(minEnergy int, maxEnergy int) Individual {
+    individual := Individual{minEnergy, maxEnergy}
     return individual
 }
 
-func ExertEnergy(individual *Individual) int {
+func ExertEnergy(individual *Individual, randomNum float32) int {
     upperBound := individual.MaxEnergy - individual.MinEnergy + 1
-    rand.Seed(individual.RandSeed)
-    return rand.Intn(upperBound) + individual.MinEnergy
+    return int((randomNum * float32(upperBound)) + float32(individual.MinEnergy))
 }
