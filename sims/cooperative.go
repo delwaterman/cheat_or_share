@@ -8,14 +8,14 @@ type Cooperative struct {
   Individuals []*Individual
 }
 
-// func (cooperative *Cooperative) ExertEnergy(randomSeed int64) int {
-//   rand.Seed(randomSeed)
-//   var exertedEnergy int
-//   for _, individual := range cooperative.Individuals {
-//     exertedEnergy += (&individual).ExertEnergy(rand.Float32())
-//   }
-//   return exertedEnergy
-// }
+func (cooperative *Cooperative) ExertEnergy() *CooperativeWorkEffort {
+  exertedEnergy := newCooperativeWorkEffort()
+
+  for _, individual := range cooperative.Individuals {
+    exertedEnergy.WorkByIndividual[individual] = individual.ExertEnergy()
+  }
+  return exertedEnergy
+}
 
 func BuildNewCooperative(numIndividuals int,
     individualBuilder IndivdualBuilder) *Cooperative {

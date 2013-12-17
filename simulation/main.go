@@ -1,20 +1,23 @@
 package main
 
 import (
+    "math/rand"
     "github.com/delwaterman/cheat_or_share/sims"
     "fmt"
 )
 
 func main() {
-    sims.InitRandomStrategy()
+    rand.Seed(0)
 
-    randFunction := sims.GenericRandomStrategy()
-    for call := 0; call < 100; call++ {
-      fmt.Printf("Random call: %v, random number: %b\n", call, randFunction())
+    cooperative := sims.BuildNewCooperative(5, sims.RandIndividualBuilder())
+    fmt.Println("Cooperative:", cooperative)
+    for ix, individual := range cooperative.Individuals {
+        fmt.Printf(" --> Individual(%v): %v\n", ix, individual)
     }
-
-    // human := sims.NewIndividual(1, 10, 0)
-    // energy := sims.ExertEnergy(&human)
-    // fmt.Printf("Human %v\n", human)
-    // fmt.Printf("Did work at %v\n", energy)
+    workEffort := cooperative.ExertEnergy()
+    fmt.Println("ExertEnergy():")
+    for individual, energy := range workEffort.WorkByIndividual {
+        fmt.Printf(" --> Individual(%v): %v\n", individual, energy)
+    }
+    fmt.Printf("Total Energy: %v\n", workEffort.TotalWork())
 }
